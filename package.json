@@ -1,0 +1,43 @@
+{
+  "name": "candlestick",
+  "version": "1.0.0",
+  "repository": "https://github.com/4teamwork/ftw.candlestick",
+  "license": "MIT",
+  "description": "Javascript library for automatically make phone links by walking through the DOM.",
+  "scripts": {
+    "test": "karma start"
+  },
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-browserify": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-karma": "*",
+    "karma": "^0.13.0",
+    "karma-browserify": "^4.2.0",
+    "jasmine-core": "*",
+    "karma-jasmine": "*",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-chrome-launcher": "*",
+    "chai": "*",
+    "karma-mocha-reporter": "*",
+    "karma-mocha": "*",
+    "mocha": "*",
+    "karma-chai": "*",
+    "karma-fixture": "*",
+    "babelify": "*",
+    "babel-preset-es2015": "*",
+    "karma-babel-preprocessor": "*",
+    "karma-html2js-preprocessor": "*",
+    "babelify-es6-polyfill": "*",
+    "jquery": "2.1.0",
+    "browserify-shim": "*",
+    "underscore": "*"
+  },
+  "dependencies": {
+    "google-libphonenumber": "1.1.0",
+    "array-includes": "3.0.1",
+    "repeat-string": "1.5.4",
+    "escape-string-regexp": "1.0.5"
+  },
+  "browserify-shim": {}
+}
