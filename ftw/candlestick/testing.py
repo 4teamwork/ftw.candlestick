@@ -21,6 +21,8 @@ class FtwLayer(PloneSandboxLayer):
             '</configure>',
             context=configurationContext)
 
+        z2.installProduct(app, 'ftw.candlestick')
+
 
     def setUpPloneSite(self, portal):
         applyProfile(portal, 'ftw.candlestick:default')
