@@ -12,6 +12,8 @@ A treeWalker walks through the whole DOM and collects all :code:`textNodes`. If 
 matches a phone number the number will be replaced with a :code:`<a href="tel:phonenumber">Your phonenumber</a>`
 link. Existing links or inputfields are not affected.
 
+By default the `candlestick.integration.js` is being loaded which converts all phone numbers in the `body` initially.
+
 .. contents:: Table of Contents
 
 Compatibility

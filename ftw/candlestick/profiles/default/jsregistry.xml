@@ -6,4 +6,9 @@
                 insert-after="++resource++plone.app.jquery.js"
                 inline="False"/>
 
+    <javascript cacheable="True" compression="safe" cookable="True" enabled="on"
+                expression="" id="++resource++ftw.candlestick/candlestick.integration.js"
+                insert-after="++resource++ftw.candlestick/candlestick.js"
+                inline="False"/>
+
 </object>
