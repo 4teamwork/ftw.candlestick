@@ -11,11 +11,7 @@ module.exports = function(karma) {
       { pattern: "./ftw/candlestick/js/test/fixtures/**/*.html" }
     ],
 
-    reporters: ['mocha'],
-
-    mochaReporter: {
-      showDiff: true
-    },
+    reporters: ['dots'],
 
     colors: true,
 
