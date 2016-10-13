@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <object name="portal_javascripts" meta_type="JavaScripts Registry">
 
-    <javascript id="++resource++ftw.candlestick/candlestick.js" remove="True" />
+    <javascript id="++resource++ftw.candlestick/ftw.candlestick.js" remove="True" />
 
     <javascript id="++resource++ftw.candlestick/candlestick.integration.js" remove="True" />
 
