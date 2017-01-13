@@ -13,7 +13,6 @@ exports.replaceTextNodesUnder = replaceTextNodesUnder;
 
 var _phonevalidator = require("./phonevalidator");
 
-var textNodeFilter = { acceptNode: acceptNodeFilter };
 var escapeStringRegExp = require("escape-string-regexp");
 var includes = require("array-includes");
 
@@ -85,7 +84,7 @@ function replaceTextNodes(textNode) {
 }
 
 function extractTextNodesUnder(root) {
-  return extractNodes(document.createTreeWalker(root, NodeFilter.SHOW_TEXT, textNodeFilter, false));
+  return extractNodes(document.createNodeIterator(root, NodeFilter.SHOW_TEXT, acceptNodeFilter, false));
 }
 
 function replaceTextNodesUnder(root) {

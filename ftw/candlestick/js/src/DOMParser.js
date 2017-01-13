@@ -1,6 +1,5 @@
 import { parse, matchPhoneGroups, createPhoneLink } from "./phonevalidator";
 
-const textNodeFilter = { acceptNode: acceptNodeFilter }
 const escapeStringRegExp = require("escape-string-regexp");
 const includes = require("array-includes");
 
@@ -61,7 +60,7 @@ export function replaceTextNodes(textNode, subStr=[], newNodes=[]) {
 }
 
 export function extractTextNodesUnder(root) {
-  return extractNodes(document.createTreeWalker(root, NodeFilter.SHOW_TEXT, textNodeFilter, false));
+  return extractNodes(document.createNodeIterator(root, NodeFilter.SHOW_TEXT, acceptNodeFilter, false));
 }
 
 export function replaceTextNodesUnder(root) {
