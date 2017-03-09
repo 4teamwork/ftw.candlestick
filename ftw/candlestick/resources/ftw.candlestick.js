@@ -78,6 +78,8 @@ function replaceTextNodes(textNode) {
         parentNode.insertBefore(match.cloneNode(true), textNode);
       });
 
+      parentNode.insertBefore(gabs[gabs.length - 1].cloneNode(true), textNode);
+
       parentNode.removeChild(textNode);
     })();
   }
@@ -121,7 +123,7 @@ var PhoneNumberFormat = require("google-libphonenumber").PhoneNumberFormat;
 
 var defaultCountry = "CH"; // ISO 3166-1 two-letter country code
 
-var possibleNumberRegEx = /([\+0\t ]*41)?[\(\)\t \/\\0]*(\d{2,3}[\(\)\t \/\\]+){2,3}(\d{2,3}[\(\)\t \/\\]*){1}/g;
+var possibleNumberRegEx = /([\+0\t ]*41( \(0\))?)?[\t \/\\0]*(\d{2,3}[\t \/\\]+){2,3}(\d{2,3}[\t \/\\]*){1}/g;
 
 /*
   This function tries to find phone number candidates out
