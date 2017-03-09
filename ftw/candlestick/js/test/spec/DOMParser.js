@@ -118,7 +118,7 @@ describe("DOMParser", () => {
       const textNode = fixture.el.querySelector("p").childNodes[0];
       replaceTextNodesUnder(fixture.el);
       assert.equal(fixture.el.querySelector("p").outerHTML,
-        '<p>Handy: <a href="tel:+41769867825">(076 986 78 25)</a> erreichbar oder privat <a href="tel:+41339769209">+ 41 (0)33 976 92 09</a></p>'
+        '<p>Handy: (<a href="tel:+41769867825">076 986 78 25</a>) erreichbar oder privat <a href="tel:+41339769209">+ 41 (0)33 976 92 09</a></p>'
       );
     });
 

@@ -28,4 +28,12 @@ describe("Integration", () => {
     assert.equal(stripWhitespace(stripNewline(actual)), stripWhitespace(stripNewline(expected)));
   });
 
+  it("should not include parentheses in the phonelink", () => {
+    fixture.load("parentheses.html");
+    linkPhoneNumbers("#actual");
+    const actual = fixture.el.querySelector("#actual").innerHTML;
+    const expected = fixture.el.querySelector("#expected").innerHTML;
+    assert.equal(stripWhitespace(stripNewline(actual)), stripWhitespace(stripNewline(expected)));
+  });
+
 });
