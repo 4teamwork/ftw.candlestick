@@ -20,4 +20,12 @@ describe("Integration", () => {
     assert.equal(stripWhitespace(stripNewline(actual)), stripWhitespace(stripNewline(expected)));
   });
 
+  it("should apply trailing text", () => {
+    fixture.load("trailing_text.html");
+    linkPhoneNumbers("#actual");
+    const actual = fixture.el.querySelector("#actual").innerHTML;
+    const expected = fixture.el.querySelector("#expected").innerHTML;
+    assert.equal(stripWhitespace(stripNewline(actual)), stripWhitespace(stripNewline(expected)));
+  });
+
 });

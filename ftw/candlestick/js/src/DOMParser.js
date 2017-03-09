@@ -2,6 +2,7 @@ import { parse, matchPhoneGroups, createPhoneLink } from "./phonevalidator";
 
 const escapeStringRegExp = require("escape-string-regexp");
 const includes = require("array-includes");
+const zipLongest = require("zip-array").zip_longest;
 
 const blacklist = [
   "A",
@@ -54,6 +55,8 @@ export function replaceTextNodes(textNode, subStr=[], newNodes=[]) {
       parentNode.insertBefore(gabs[index].cloneNode(true), textNode);
       parentNode.insertBefore(match.cloneNode(true), textNode);
     });
+
+    parentNode.insertBefore(gabs[gabs.length - 1].cloneNode(true), textNode);
 
     parentNode.removeChild(textNode);
   }
