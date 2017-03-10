@@ -55,6 +55,8 @@ export function replaceTextNodes(textNode, subStr=[], newNodes=[]) {
       parentNode.insertBefore(match.cloneNode(true), textNode);
     });
 
+    parentNode.insertBefore(gabs[gabs.length - 1].cloneNode(true), textNode);
+
     parentNode.removeChild(textNode);
   }
 }

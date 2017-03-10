@@ -5,7 +5,12 @@ Changelog
 1.0.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix parse and replace issues.
+
+  - Parentheses should not be included in the phone links.
+  - Trailing text should not be ignored.
+
+  [Kevin Bieri]
 
 
 1.0.1 (2017-01-13)

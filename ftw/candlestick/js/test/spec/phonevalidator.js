@@ -65,7 +65,7 @@ describe("Phonevalidator", () => {
 
       assert.deepEqual(
         matchPhoneGroups(possiblePhoneNumbers),
-        ["(076 986 78 25)", "+ 41 (0)33 976 92 09"]
+        ["076 986 78 25", "+ 41 (0)33 976 92 09"]
       )
     });
   });
