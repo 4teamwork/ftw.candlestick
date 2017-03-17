@@ -5,7 +5,7 @@ The name **candlestick** comes from the early times when the telephone has been 
 One of the first model of a telephone was a stick which has been placed on table where the speaker
 had to talk into.
 
-.. image:: https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/JolsonTelephone.jpg/550px-JolsonTelephone.jpg
+.. image:: docs/candlestick.jpg
 
 This module provides a javascript library for automatically generate phone links.
 A treeWalker walks through the whole DOM and collects all :code:`textNodes`. If a node
