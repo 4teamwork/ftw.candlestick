@@ -27,7 +27,7 @@ Installation
 
 - Add the package to your buildout configuration:
 
-::
+.. code:: ini
 
     [instance]
     eggs +=
