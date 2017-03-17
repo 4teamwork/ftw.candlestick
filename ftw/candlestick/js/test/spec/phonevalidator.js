@@ -1,5 +1,5 @@
 import { parse, createPhoneLink, matchPhoneGroups } from "phonevalidator";
-import { phonenumbers } from "phonenumbers";
+import { phonenumbers } from "../fixtures/phonenumbers";
 import { replaceTextNodesUnder } from "DOMParser";
 require('babelify-es6-polyfill');
 const _ = require("underscore");

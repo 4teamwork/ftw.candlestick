@@ -5,6 +5,9 @@ Changelog
 1.0.3 (unreleased)
 ------------------
 
+- Move phonenumbers samples to testing section.
+  [Kevin Bieri]
+
 - Fix readme.
   [Kevin Bieri]
 
