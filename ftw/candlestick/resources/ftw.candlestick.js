@@ -29,10 +29,10 @@ function acceptNodeFilter(node) {
   if (node.nodeType === Node.TEXT_NODE && node.parentNode && isBlacklisted(node.parentNode)) {
     return NodeFilter.FILTER_REJECT;
   }
-  if ((0, _phonevalidator.matchPhoneGroups)(node.textContent).length) {
-    return NodeFilter.FILTER_ACCEPT;
+  if (!(0, _phonevalidator.matchPhoneGroups)(node.textContent).length) {
+    return NodeFilter.FILTER_REJECT;
   }
-  return NodeFilter.FILTER_REJECT;
+  return NodeFilter.FILTER_ACCEPT;
 }
 
 function extractNodes(walker) {
@@ -60,28 +60,26 @@ function replaceTextNodes(textNode) {
     throw new Error("The nodes to replace does not match the substrings");
   }
   if (textNode.parentNode) {
-    (function () {
-      var subStrRegExp = mergeStringToRegExp(subStr, "g");
-      var gabs = textNode.textContent.split(subStrRegExp);
-      var matches = textNode.textContent.match(subStrRegExp);
-      var parentNode = textNode.parentNode;
+    var subStrRegExp = mergeStringToRegExp(subStr, "g");
+    var gabs = textNode.textContent.split(subStrRegExp);
+    var matches = textNode.textContent.match(subStrRegExp);
+    var parentNode = textNode.parentNode;
 
-      gabs = gabs.map(function (part) {
-        return document.createTextNode(part);
-      });
-      matches = matches.map(function (match, index) {
-        return newNodes[index];
-      });
+    gabs = gabs.map(function (part) {
+      return document.createTextNode(part);
+    });
+    matches = matches.map(function (match, index) {
+      return newNodes[index];
+    });
 
-      matches.forEach(function (match, index) {
-        parentNode.insertBefore(gabs[index].cloneNode(true), textNode);
-        parentNode.insertBefore(match.cloneNode(true), textNode);
-      });
+    matches.forEach(function (match, index) {
+      parentNode.insertBefore(gabs[index].cloneNode(true), textNode);
+      parentNode.insertBefore(match.cloneNode(true), textNode);
+    });
 
-      parentNode.insertBefore(gabs[gabs.length - 1].cloneNode(true), textNode);
+    parentNode.insertBefore(gabs[gabs.length - 1].cloneNode(true), textNode);
 
-      parentNode.removeChild(textNode);
-    })();
+    parentNode.removeChild(textNode);
   }
 }
 
@@ -123,7 +121,7 @@ var PhoneNumberFormat = require("google-libphonenumber").PhoneNumberFormat;
 
 var defaultCountry = "CH"; // ISO 3166-1 two-letter country code
 
-var possibleNumberRegEx = /([\+0\t ]*41( \(0\))?)?[\t \/\\0]*(\d{2,3}[\t \/\\]+){2,3}(\d{2,3}[\t \/\\]*){1}/g;
+var possibleNumberRegEx = /[\+0\t ]*(41)?( \(0\))?[\t \/\\0]*(\d{2,3}[\t \/\\]*){2,3}(\d{2,3}[\t \/\\]*){1}/g;
 
 /*
   This function tries to find phone number candidates out
@@ -143,7 +141,11 @@ function parse(phoneNumber) {
 }
 
 function createPhoneLink(phoneNumber) {
-  var internationalNumber = phoneUtil.format(parse(phoneNumber), PhoneNumberFormat.E164);
+  var parsedNumber = parse(phoneNumber);
+  if (!phoneUtil.isValidNumber(parsedNumber)) {
+    return document.createTextNode(phoneNumber);
+  }
+  var internationalNumber = phoneUtil.format(parsedNumber, PhoneNumberFormat.E164);
   var phoneLink = document.createElement("a");
   phoneLink.href = "tel:" + internationalNumber;
   phoneLink.textContent = phoneNumber;
@@ -156,7 +158,7 @@ function linkPhoneNumbers() {
   (0, _DOMParser.replaceTextNodesUnder)(document.querySelector(root));
 }
 
-},{"./DOMParser":1,"google-libphonenumber":24,"repeat-string":31}],4:[function(require,module,exports){
+},{"./DOMParser":1,"google-libphonenumber":24,"repeat-string":32}],4:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -294,7 +296,7 @@ defineProperties.supportsDescriptors = !!supportsDescriptors;
 
 module.exports = defineProperties;
 
-},{"foreach":21,"object-keys":29}],9:[function(require,module,exports){
+},{"foreach":21,"object-keys":30}],9:[function(require,module,exports){
 'use strict';
 
 var $isNaN = require('./helpers/isNaN');
@@ -382,7 +384,7 @@ var ES5 = {
 
 module.exports = ES5;
 
-},{"./helpers/isFinite":12,"./helpers/isNaN":13,"./helpers/mod":15,"./helpers/sign":16,"es-to-primitive/es5":17,"is-callable":25}],10:[function(require,module,exports){
+},{"./helpers/isFinite":12,"./helpers/isNaN":13,"./helpers/mod":15,"./helpers/sign":16,"es-to-primitive/es5":17,"is-callable":26}],10:[function(require,module,exports){
 'use strict';
 
 var toStr = Object.prototype.toString;
@@ -406,7 +408,7 @@ var isOctal = bind.call(Function.call, RegExp.prototype.test, /^0o[0-7]+$/i);
 var nonWS = ['\u0085', '\u200b', '\ufffe'].join('');
 var nonWSregex = new RegExp('[' + nonWS + ']', 'g');
 var hasNonWS = bind.call(Function.call, RegExp.prototype.test, nonWSregex);
-var invalidHexLiteral = /^[\-\+]0x[0-9a-f]+$/i;
+var invalidHexLiteral = /^[-+]0x[0-9a-f]+$/i;
 var isInvalidHexLiteral = bind.call(Function.call, RegExp.prototype.test, invalidHexLiteral);
 
 // whitespace from: http://es5.github.io/#x15.5.4.20
@@ -611,6 +613,77 @@ var ES6 = assign(assign({}, ES5), {
 		return (x === y) || ($isNaN(x) && $isNaN(y));
 	},
 
+	/**
+	 * 7.3.2 GetV (V, P)
+	 * 1. Assert: IsPropertyKey(P) is true.
+	 * 2. Let O be ToObject(V).
+	 * 3. ReturnIfAbrupt(O).
+	 * 4. Return O.[[Get]](P, V).
+	 */
+	GetV: function GetV(V, P) {
+		// 7.3.2.1
+		if (!this.IsPropertyKey(P)) {
+			throw new TypeError('Assertion failed: IsPropertyKey(P) is not true');
+		}
+
+		// 7.3.2.2-3
+		var O = this.ToObject(V);
+
+		// 7.3.2.4
+		return O[P];
+	},
+
+	/**
+	 * 7.3.9 - http://www.ecma-international.org/ecma-262/6.0/#sec-getmethod
+	 * 1. Assert: IsPropertyKey(P) is true.
+	 * 2. Let func be GetV(O, P).
+	 * 3. ReturnIfAbrupt(func).
+	 * 4. If func is either undefined or null, return undefined.
+	 * 5. If IsCallable(func) is false, throw a TypeError exception.
+	 * 6. Return func.
+	 */
+	GetMethod: function GetMethod(O, P) {
+		// 7.3.9.1
+		if (!this.IsPropertyKey(P)) {
+			throw new TypeError('Assertion failed: IsPropertyKey(P) is not true');
+		}
+
+		// 7.3.9.2
+		var func = this.GetV(O, P);
+
+		// 7.3.9.4
+		if (func == null) {
+			return undefined;
+		}
+
+		// 7.3.9.5
+		if (!this.IsCallable(func)) {
+			throw new TypeError(P + 'is not a function');
+		}
+
+		// 7.3.9.6
+		return func;
+	},
+
+	/**
+	 * 7.3.1 Get (O, P) - http://www.ecma-international.org/ecma-262/6.0/#sec-get-o-p
+	 * 1. Assert: Type(O) is Object.
+	 * 2. Assert: IsPropertyKey(P) is true.
+	 * 3. Return O.[[Get]](P, O).
+	 */
+	Get: function Get(O, P) {
+		// 7.3.1.1
+		if (this.Type(O) !== 'Object') {
+			throw new TypeError('Assertion failed: Type(O) is not Object');
+		}
+		// 7.3.1.2
+		if (!this.IsPropertyKey(P)) {
+			throw new TypeError('Assertion failed: IsPropertyKey(P) is not true');
+		}
+		// 7.3.1.3
+		return O[P];
+	},
+
 	Type: function Type(x) {
 		if (typeof x === 'symbol') {
 			return 'Symbol';
@@ -645,7 +718,7 @@ delete ES6.CheckObjectCoercible; // renamed in ES6 to RequireObjectCoercible
 
 module.exports = ES6;
 
-},{"./es5":9,"./helpers/assign":11,"./helpers/isFinite":12,"./helpers/isNaN":13,"./helpers/isPrimitive":14,"./helpers/mod":15,"./helpers/sign":16,"es-to-primitive/es6":18,"function-bind":23,"is-regex":27}],11:[function(require,module,exports){
+},{"./es5":9,"./helpers/assign":11,"./helpers/isFinite":12,"./helpers/isNaN":13,"./helpers/isPrimitive":14,"./helpers/mod":15,"./helpers/sign":16,"es-to-primitive/es6":18,"function-bind":23,"is-regex":28}],11:[function(require,module,exports){
 var has = Object.prototype.hasOwnProperty;
 module.exports = Object.assign || function assign(target, source) {
 	for (var key in source) {
@@ -721,7 +794,7 @@ module.exports = function ToPrimitive(input, PreferredType) {
 	return ES5internalSlots['[[DefaultValue]]'](input, PreferredType);
 };
 
-},{"./helpers/isPrimitive":19,"is-callable":25}],18:[function(require,module,exports){
+},{"./helpers/isPrimitive":19,"is-callable":26}],18:[function(require,module,exports){
 'use strict';
 
 var hasSymbols = typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol';
@@ -797,7 +870,7 @@ module.exports = function ToPrimitive(input, PreferredType) {
 	return ordinaryToPrimitive(input, hint === 'default' ? 'number' : hint);
 };
 
-},{"./helpers/isPrimitive":19,"is-callable":25,"is-date-object":26,"is-symbol":28}],19:[function(require,module,exports){
+},{"./helpers/isPrimitive":19,"is-callable":26,"is-date-object":27,"is-symbol":29}],19:[function(require,module,exports){
 arguments[4][14][0].apply(exports,arguments)
 },{"dup":14}],20:[function(require,module,exports){
 'use strict';
@@ -5660,6 +5733,11 @@ module.exports = i18n.phonenumbers["default"] = i18n.phonenumbers.libphonenumber
 });
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],25:[function(require,module,exports){
+var bind = require('function-bind');
+
+module.exports = bind.call(Function.call, Object.prototype.hasOwnProperty);
+
+},{"function-bind":23}],26:[function(require,module,exports){
 'use strict';
 
 var fnToStr = Function.prototype.toString;
@@ -5700,7 +5778,7 @@ module.exports = function isCallable(value) {
 	return strClass === fnClass || strClass === genClass;
 };
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 'use strict';
 
 var getDay = Date.prototype.getDay;
@@ -5722,16 +5800,24 @@ module.exports = function isDateObject(value) {
 	return hasToStringTag ? tryDateObject(value) : toStr.call(value) === dateClass;
 };
 
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 'use strict';
 
+var has = require('has');
 var regexExec = RegExp.prototype.exec;
-var tryRegexExec = function tryRegexExec(value) {
+var gOPD = Object.getOwnPropertyDescriptor;
+
+var tryRegexExecCall = function tryRegexExec(value) {
 	try {
+		var lastIndex = value.lastIndex;
+		value.lastIndex = 0;
+
 		regexExec.call(value);
 		return true;
 	} catch (e) {
 		return false;
+	} finally {
+		value.lastIndex = lastIndex;
 	}
 };
 var toStr = Object.prototype.toString;
@@ -5739,11 +5825,23 @@ var regexClass = '[object RegExp]';
 var hasToStringTag = typeof Symbol === 'function' && typeof Symbol.toStringTag === 'symbol';
 
 module.exports = function isRegex(value) {
-	if (typeof value !== 'object') { return false; }
-	return hasToStringTag ? tryRegexExec(value) : toStr.call(value) === regexClass;
+	if (!value || typeof value !== 'object') {
+		return false;
+	}
+	if (!hasToStringTag) {
+		return toStr.call(value) === regexClass;
+	}
+
+	var descriptor = gOPD(value, 'lastIndex');
+	var hasLastIndexDataProperty = descriptor && has(descriptor, 'value');
+	if (!hasLastIndexDataProperty) {
+		return false;
+	}
+
+	return tryRegexExecCall(value);
 };
 
-},{}],28:[function(require,module,exports){
+},{"has":25}],29:[function(require,module,exports){
 'use strict';
 
 var toStr = Object.prototype.toString;
@@ -5772,7 +5870,7 @@ if (hasSymbols) {
 	};
 }
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 'use strict';
 
 // modified from https://github.com/es-shims/es5-shim
@@ -5914,7 +6012,7 @@ keysShim.shim = function shimObjectKeys() {
 
 module.exports = keysShim;
 
-},{"./isArguments":30}],30:[function(require,module,exports){
+},{"./isArguments":31}],31:[function(require,module,exports){
 'use strict';
 
 var toStr = Object.prototype.toString;
@@ -5933,7 +6031,7 @@ module.exports = function isArguments(value) {
 	return isArgs;
 };
 
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 /*!
  * repeat-string <https://github.com/jonschlinkert/repeat-string>
  *

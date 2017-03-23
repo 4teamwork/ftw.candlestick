@@ -38,9 +38,9 @@ describe("Phonevalidator", () => {
 
   describe("replace", () => {
     it("should create a telephone link including E164 number format", () => {
-      const phoneLink = createPhoneLink("Tel. 057 254 86 15");
-      assert.equal(decodeUnicode(phoneLink.href), "tel:+41572548615");
-      assert.equal(phoneLink.textContent, "Tel. 057 254 86 15");
+      const phoneLink = createPhoneLink("033 823 46 98");
+      assert.equal(decodeUnicode(phoneLink.href), "tel:+41338234698");
+      assert.equal(phoneLink.textContent, "033 823 46 98");
     });
 
     it("should replace all phone numbers with a phone link", () => {
