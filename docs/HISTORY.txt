@@ -5,6 +5,13 @@ Changelog
 1.0.3 (unreleased)
 ------------------
 
+- Fix parson of phonenumbers.
+
+  - No longer allow too short phonenumbers
+  - Allow phone numbers with varying spaces around number groups
+
+  [Kevin Bieri]
+
 - Move phonenumbers samples to testing section.
   [Kevin Bieri]
 

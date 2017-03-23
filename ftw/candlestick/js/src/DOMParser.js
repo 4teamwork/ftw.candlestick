@@ -18,10 +18,10 @@ export function acceptNodeFilter(node) {
   if(node.nodeType === Node.TEXT_NODE && node.parentNode && isBlacklisted(node.parentNode)) {
     return NodeFilter.FILTER_REJECT;
   }
-  if(matchPhoneGroups(node.textContent).length) {
-    return NodeFilter.FILTER_ACCEPT;
+  if(!matchPhoneGroups(node.textContent).length) {
+    return NodeFilter.FILTER_REJECT;
   }
-  return NodeFilter.FILTER_REJECT;
+  return NodeFilter.FILTER_ACCEPT;
 }
 
 export function extractNodes(walker, nodes=[]) {

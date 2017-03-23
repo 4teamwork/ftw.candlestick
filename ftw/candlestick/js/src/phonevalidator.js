@@ -6,7 +6,7 @@ const PhoneNumberFormat = require("google-libphonenumber").PhoneNumberFormat;
 
 const defaultCountry = "CH"; // ISO 3166-1 two-letter country code
 
-const possibleNumberRegEx = /([\+0\t ]*41( \(0\))?)?[\t \/\\0]*(\d{2,3}[\t \/\\]+){2,3}(\d{2,3}[\t \/\\]*){1}/g;
+const possibleNumberRegEx = /[\+0\t ]*(41)?( \(0\))?[\t \/\\0]*(\d{2,3}[\t \/\\]*){2,3}(\d{2,3}[\t \/\\]*){1}/g;
 
 /*
   This function tries to find phone number candidates out
@@ -23,7 +23,11 @@ export function matchPhoneGroups(possiblePhoneNumbers) {
 export function parse(phoneNumber) { return phoneUtil.parse(phoneNumber, defaultCountry); }
 
 export function createPhoneLink(phoneNumber) {
-  let internationalNumber = phoneUtil.format(parse(phoneNumber), PhoneNumberFormat.E164);
+  const parsedNumber = parse(phoneNumber);
+  if(!phoneUtil.isValidNumber(parsedNumber)) {
+    return document.createTextNode(phoneNumber);
+  }
+  let internationalNumber = phoneUtil.format(parsedNumber, PhoneNumberFormat.E164);
   let phoneLink = document.createElement("a");
   phoneLink.href = `tel:${internationalNumber}`;
   phoneLink.textContent = phoneNumber;
