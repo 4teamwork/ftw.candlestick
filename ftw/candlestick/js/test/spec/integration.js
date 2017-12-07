@@ -52,4 +52,12 @@ describe("Integration", () => {
     assert.equal(stripWhitespace(stripNewline(actual)), stripWhitespace(stripNewline(expected)));
   });
 
+  it("should not match IBAN numbers", () => {
+    fixture.load("iban_number.html");
+    linkPhoneNumbers("#actual");
+    const actual = fixture.el.querySelector("#actual").innerHTML;
+    const expected = fixture.el.querySelector("#expected").innerHTML;
+    assert.equal(stripWhitespace(stripNewline(actual)), stripWhitespace(stripNewline(expected)));
+  });
+
 });
