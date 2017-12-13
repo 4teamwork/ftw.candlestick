@@ -5,7 +5,7 @@ Changelog
 1.0.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- IBAN number are no longer recognized as phone numbers. [Kevin Bieri]
 
 
 1.0.3 (2017-03-23)
