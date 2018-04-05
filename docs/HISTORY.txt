@@ -5,7 +5,7 @@ Changelog
 1.0.6 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Test against Plone 5.1.x. [mbaechtold]
 
 
 1.0.5 (2018-01-11)
