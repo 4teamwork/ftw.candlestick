@@ -6,6 +6,7 @@ Changelog
 ------------------
 
 - Test against Plone 5.1.x. [mbaechtold]
+- Add HISTORY.txt to long description. [busykoala]
 
 
 1.0.5 (2018-01-11)
