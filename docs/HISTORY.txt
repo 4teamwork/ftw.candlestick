@@ -5,7 +5,7 @@ Changelog
 1.1.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Add profile (and uninstall profile) for Plone 5. [djowett-ftw]
 
 
 1.1.0 (2019-09-04)
