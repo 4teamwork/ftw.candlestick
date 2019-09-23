@@ -2,11 +2,17 @@ Changelog
 =========
 
 
-1.1.1 (unreleased)
+1.1.2 (unreleased)
+------------------
+
+- Nothing changed yet.
+
+
+1.1.1 (2019-09-23)
 ------------------
 
 - Add profile (and uninstall profile) for Plone 5. [djowett-ftw]
-
+- Update README.rst to improve English and note Plone5.1 compatibility. [djowett-ftw]
 
 1.1.0 (2019-09-04)
 ------------------
