@@ -6,7 +6,7 @@ Changelog
 ------------------
 
 - Add profile (and uninstall profile) for Plone 5. [djowett-ftw]
-
+- Update README.rst to improve English and note Plone5.1 compatibility. [djowett-ftw]
 
 1.1.0 (2019-09-04)
 ------------------

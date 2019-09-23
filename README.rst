@@ -1,18 +1,18 @@
 Introduction
 ============
 
-The name **candlestick** comes from the early times when the telephone has been invented.
-One of the first model of a telephone was a stick which has been placed on table where the speaker
-had to talk into.
+The name **candlestick** comes from the times when the telephone had just been invented.
+One of the first models of a telephone was a stick which was placed on a table where the speaker
+could talk into it.
 
 .. image:: docs/candlestick.jpg
 
-This module provides a javascript library for automatically generate phone links.
+This module provides a javascript library to automatically generate phone links.
 A treeWalker walks through the whole DOM and collects all :code:`textNodes`. If a node
 matches a phone number the number will be replaced with a :code:`<a href="tel:phonenumber">Your phonenumber</a>`
-link. Existing links or inputfields are not affected.
+link. Existing links or input fields are not affected.
 
-By default the `candlestick.integration.js` is being loaded which converts all phone numbers in the `body` initially.
+By default the `candlestick.integration.js` is loaded which converts all phone numbers in the `body`.
 
 .. contents:: Table of Contents
 
@@ -20,6 +20,7 @@ Compatibility
 -------------
 
 Plone 4.3.x
+Plone 5.1.x
 
 
 Installation
