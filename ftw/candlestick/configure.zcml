@@ -3,10 +3,12 @@
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:five="http://namespaces.zope.org/five"
+    xmlns:upgrade-step="http://namespaces.zope.org/ftw.upgrade"
     xmlns:zcml="http://namespaces.zope.org/zcml"
     i18n_domain="ftw.candlestick">
 
     <five:registerPackage package="." initialize=".initialize" />
+    <include package="ftw.upgrade" file="meta.zcml" />
 
     <genericsetup:registerProfile
         zcml:condition="not-have plone-5"
@@ -43,6 +45,11 @@
     <browser:resourceDirectory
         name="ftw.candlestick"
         directory="resources"
+        />
+
+    <upgrade-step:directory
+        profile="ftw.candlestick:default"
+        directory="./upgrades"
         />
 
 </configure>

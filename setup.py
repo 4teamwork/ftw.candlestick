@@ -50,6 +50,7 @@ setup(
     zip_safe=False,
 
     install_requires=[
+        'ftw.upgrade',
         'setuptools',
         'plone.dexterity',
         'plone.app.dexterity',
