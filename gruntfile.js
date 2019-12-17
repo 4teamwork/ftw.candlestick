@@ -28,6 +28,19 @@ module.exports = function(grunt) {
       }
     },
 
+    requirejs: {
+      compile: {
+        options: {
+          baseUrl: "./ftw/candlestick/resources",
+          paths: {
+              jquery: "empty:",
+          },
+          name: "main",
+          out: "./ftw/candlestick/resources/candlestick-compiled.js",
+        },
+      },
+    },
+
     karma: {
       options: {
         configFile: "karma.conf.js"
@@ -45,7 +58,7 @@ module.exports = function(grunt) {
     watch: {
       scripts: {
         files: ["./ftw/candlestick/js/src/**/*.js"],
-        tasks: ["browserify"]
+        tasks: ["browserify", "requirejs" ]
       }
     }
   });
@@ -53,9 +66,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-browserify");
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks("grunt-karma");
+  grunt.loadNpmTasks("grunt-contrib-requirejs");
 
   grunt.registerTask("default", ["watch"]);
-  grunt.registerTask("build", ["browserify"]);
+  grunt.registerTask("build", ["browserify", "requirejs"]);
+  grunt.registerTask("compile", ["requirejs"]);
   grunt.registerTask("test", ["karma:dev"]);
   grunt.registerTask("test-ci", ["karma:ci"]);
 
