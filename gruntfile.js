@@ -57,7 +57,12 @@ module.exports = function(grunt) {
 
     watch: {
       scripts: {
-        files: ["./ftw/candlestick/js/src/**/*.js"],
+        files: [
+          "./ftw/candlestick/js/src/**/*.js",
+          "./ftw/candlestick/resources/*.js",
+          "!./ftw/candlestick/resources/candlestick-compiled.js",
+          "!./ftw/candlestick/resources/ftw.candlestick.js",
+        ],
         tasks: ["browserify", "requirejs" ]
       }
     }
