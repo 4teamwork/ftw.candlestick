@@ -4,10 +4,11 @@
   "repository": "https://github.com/4teamwork/ftw.candlestick",
   "license": "MIT",
   "description": "Javascript library for automatically make phone links by walking through the DOM.",
+  "private": true,
   "scripts": {
     "test": "karma start",
-    "build": "grunt build && r.js -o build.js",
-    "watch": "chokidar \"./ftw/candlestick/resources/*.js\" -i \"**/*-compiled.js\" -c \"r.js -o build.js;\""
+    "build": "grunt build",
+    "watch": "grunt watch"
   },
   "devDependencies": {
     "babel-preset-es2015": "6.16.0",
@@ -15,9 +16,9 @@
     "babelify-es6-polyfill": "1.0.4",
     "browserify-shim": "3.8.12",
     "chai": "3.5.0",
-    "chokidar-cli": "^2.1.0",
     "grunt": "1.0.1",
     "grunt-browserify": "5.0.0",
+    "grunt-contrib-requirejs": "^1.0.0",
     "grunt-contrib-watch": "1.0.0",
     "grunt-karma": "2.0.0",
     "jasmine-core": "2.5.2",
