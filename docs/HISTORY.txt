@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.1.4 (unreleased)
+1.1.4 (2019-12-17)
 ------------------
 
 - Combine yarn watch and grunt watch [Nachtalb]
