@@ -1,3 +1,1 @@
-require(['ftw.candlestick'], function (candlestick) {
-    candlestick();
-});
+require(['ftw.candlestick', 'candlestick.integration'], function (candlestick, candlestick_integration){});
