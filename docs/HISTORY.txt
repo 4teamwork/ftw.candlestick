@@ -5,7 +5,7 @@ Changelog
 1.1.5 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Pin down setuptools for Python 2.7 compatibility reasons. [busykoala]
 
 
 1.1.4 (2019-12-17)
