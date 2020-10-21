@@ -23,7 +23,14 @@ export function matchPhoneGroups(possiblePhoneNumbers) {
 export function parse(phoneNumber) { return phoneUtil.parse(phoneNumber, defaultCountry); }
 
 export function createPhoneLink(phoneNumber) {
-  const parsedNumber = parse(phoneNumber);
+  let parsedNumber;
+  try {
+    parsedNumber = parse(phoneNumber);
+  } catch (error) {
+    console.info("Could not parse the following number:", phoneNumber);
+    return;
+  }
+    
   if(!phoneUtil.isValidNumber(parsedNumber)) {
     return document.createTextNode(phoneNumber);
   }
