@@ -121,7 +121,7 @@ var PhoneNumberFormat = require("google-libphonenumber").PhoneNumberFormat;
 
 var defaultCountry = "CH"; // ISO 3166-1 two-letter country code
 
-var possibleNumberRegEx = /(\+|0|\(0\)){1}(33)?( )*(41)?( )*(\(0\))?(\d){0,2}(41)?( )*(41)?( )*(\d){3}( )*(\d){2}( )*(\d){2}/g;
+var possibleNumberRegEx = /(\+0|\+|0|\(0\)){1}(33)?( )*(41|800)?( )*(\(0\))?(\d){0,2}(41)?( )*(41)?( )*(\d){3}( )*((\d){2}|(\d){3})( )*((\d){2}|(\d){1})/g;
 
 /*
   This function tries to find phone number candidates out
@@ -146,13 +146,20 @@ function createPhoneLink(phoneNumber) {
     parsedNumber = parse(phoneNumber);
   } catch (error) {
     console.info("Could not parse the following number:", phoneNumber);
-    return;
+    console.info(error);
+    return document.createTextNode(phoneNumber);
   }
 
   if (!phoneUtil.isValidNumber(parsedNumber)) {
     return document.createTextNode(phoneNumber);
   }
-  var internationalNumber = phoneUtil.format(parsedNumber, PhoneNumberFormat.E164);
+
+  var internationalNumber = void 0;
+  if (parsedNumber.values_[2].toString().indexOf(800) === 0) {
+    internationalNumber = '0' + parsedNumber.values_[2];
+  } else {
+    internationalNumber = phoneUtil.format(parsedNumber, PhoneNumberFormat.E164);
+  }
   var phoneLink = document.createElement("a");
   phoneLink.href = "tel:" + internationalNumber;
   phoneLink.textContent = phoneNumber;
