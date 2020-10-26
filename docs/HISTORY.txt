@@ -6,6 +6,8 @@ Changelog
 ------------------
 
 - Pin down setuptools for Python 2.7 compatibility reasons. [busykoala]
+- Make parsing phone number rebust, so it does not break the whole site if merged with other resources. [mathias.leimgruber]
+- Add support for 0800 numbers. [mathias.leimgruber]
 
 
 1.1.4 (2019-12-17)
