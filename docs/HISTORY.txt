@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.1.5 (unreleased)
+1.1.5 (2020-10-26)
 ------------------
 
 - Pin down setuptools for Python 2.7 compatibility reasons. [busykoala]
